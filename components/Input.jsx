@@ -1,5 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useRef, useState } from 'react'
+import { db, storage } from '../firebase'
+import {
+  addDoc,
+  collection,
+  doc,
+  serverTimestamp,
+  updateDoc,
+} from '@firebase/firestore'
 
 import Picker from '@emoji-mart/react'
 import {
@@ -9,11 +17,13 @@ import {
   PhotographIcon,
   XIcon,
 } from '@heroicons/react/outline'
+import { getDownloadURL, uploadString } from 'firebase/storage'
 
 const Input = () => {
   const [input, setInput] = useState('')
   const [selectedFile, setSelectedFile] = useState(null)
   const [showEmojis, setShowEmojis] = useState(false)
+  const [loading, setLoading] = useState(false)
   const filePickerRef = useRef(null)
 
   const addImageToPost = () => {}
@@ -24,6 +34,36 @@ const Input = () => {
     sym.forEach((el) => codesArray.push('0x' + el))
     let emoji = String.fromCodePoint(...codesArray)
     setInput(input + emoji)
+  }
+
+  sendPost = async () => {
+    if (loading) return
+    setLoading(true)
+
+    const docRef = await addDoc(collection(db, 'posts'), {
+      // id: session.user.uid,
+      // username: session.user.name,
+      // userImg: session.user.image,
+      // tag: session.user.tag,
+      text: input,
+      timestamp: serverTimestamp(),
+    })
+
+    const imageRef = ref(storage, `posts/${docRef.id}/image`)
+
+    if (selectedFile) {
+      await uploadString(imageRef, selectedFile, 'data_url').then(async () => {
+        const downloadURL = await getDownloadURL(imageRef)
+        await updateDoc(doc(db, 'posts', docRef.id), {
+          image: downloadURL,
+        })
+      })
+    }
+
+    setLoading(false)
+    setInput('')
+    setSelectedFile(null)
+    setShowEmojis(false)
   }
 
   return (
