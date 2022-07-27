@@ -8,6 +8,8 @@ import {
   serverTimestamp,
   updateDoc,
 } from '@firebase/firestore'
+import { getDownloadURL, ref, uploadString } from 'firebase/storage'
+import { useSession } from 'next-auth/react'
 
 import Picker from '@emoji-mart/react'
 import {
@@ -15,11 +17,13 @@ import {
   ChartBarIcon,
   EmojiHappyIcon,
   PhotographIcon,
+  UserCircleIcon,
   XIcon,
 } from '@heroicons/react/outline'
-import { getDownloadURL, ref, uploadString } from 'firebase/storage'
 
 const Input = () => {
+  const { data: session } = useSession()
+
   const [input, setInput] = useState('')
   const [selectedFile, setSelectedFile] = useState(null)
   const [showEmojis, setShowEmojis] = useState(false)
@@ -31,10 +35,10 @@ const Input = () => {
     setLoading(true)
 
     const docRef = await addDoc(collection(db, 'posts'), {
-      // id: session.user.uid,
-      // username: session.user.name,
-      // userImg: session.user.image,
-      // tag: session.user.tag,
+      id: session.user.uid,
+      username: session.user.name,
+      userImg: session.user.image,
+      tag: session.user.tag,
       text: input,
       timestamp: serverTimestamp(),
     })
@@ -82,8 +86,9 @@ const Input = () => {
       }`}
     >
       <img
-        src="https://avatars.githubusercontent.com/u/87643260?v=4"
-        alt="User Image"
+        src={session.user.image}
+        alt="User image"
+        referrerPolicy="no-referrer"
         className="rounded-full cursor-pointer w-11 h-11"
       />
       <div className="w-full divide-y divide-gray-700">
