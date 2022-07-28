@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import Moment from 'react-moment'
+import 'moment/locale/pt-br'
 import { useRecoilState } from 'recoil'
 import { modalState, postIdState } from '../atoms/modalAtom'
 import { db } from '../firebase'
@@ -30,6 +31,7 @@ import {
   HeartIcon as HeartIconFilled,
   ChatIcon as ChatIconFilled,
 } from '@heroicons/react/solid'
+import moment from 'moment'
 
 const Post = ({ id, post, postPage }) => {
   const { data: session } = useSession()
@@ -40,6 +42,18 @@ const Post = ({ id, post, postPage }) => {
   const [comments, setComments] = useState([])
   const [likes, setLikes] = useState([])
   const [liked, setLiked] = useState(false)
+
+  useEffect(
+    () =>
+      onSnapshot(
+        query(
+          collection(db, 'posts', id, 'comments'),
+          orderBy('timestamp', 'desc')
+        ),
+        (snapshot) => setComments(snapshot.docs)
+      ),
+    [id]
+  )
 
   useEffect(
     () =>
@@ -67,6 +81,7 @@ const Post = ({ id, post, postPage }) => {
     }
   }
 
+  moment.locale('pr-br')
   return (
     <section
       className="flex p-3 border-b border-gray-700 cursor-pointer"
