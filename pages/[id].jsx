@@ -27,10 +27,10 @@ import Comment from '../components/Comment'
 import Widgets from '../components/Widgets'
 
 export const getServerSideProps = async (context) => {
-  const trendingResults = await fetch('https://jsonkeeper.com/b/NKEV').then(
+  const trendingResults = await fetch('https://jsonkeeper.com/b/D3NP').then(
     (res) => res.json()
   )
-  const followResults = await fetch('https://jsonkeeper.com/b/WWMJ').then(
+  const followResults = await fetch(' https://jsonkeeper.com/b/5BJH').then(
     (res) => res.json()
   )
   const providers = await getProviders()
