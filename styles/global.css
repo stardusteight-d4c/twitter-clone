@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 html,
 body {
   @apply font-arial bg-black antialiased scroll-smooth;
@@ -21,3 +22,11 @@ body {
   }
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1d9bf0;
+  border-radius: 20px;
+}
