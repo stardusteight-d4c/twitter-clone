@@ -30,7 +30,6 @@ export const getServerSideProps = async (context) => {
 }
 
 export default function Home({ trendingResults, followResults, providers }) {
-  console.log(followResults)
   const { data: session } = useSession()
   const [isOpen, setIsOpen] = useRecoilState(modalState)
 
