@@ -98,7 +98,7 @@ const Input = () => {
             onChange={(e) => setInput(e.target.value)}
             rows="2"
             placeholder="O que está acontecendo?"
-            className="mt-2 w-full bg-transparent outline-none placeholder-gray-500 tracking-wide text-[#d9d9d9] text-lg min-h-[50px]"
+            className="mt-2 w-full bg-transparent outline-none placeholder-gray-500 tracking-wide text-[#d9d9d9] text-lg min-h-[50px] max-h-[150px]"
           />
 
           {selectedFile && (

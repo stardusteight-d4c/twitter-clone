@@ -5,12 +5,12 @@
 
 html,
 body {
-  @apply font-arial bg-black antialiased scroll-smooth;
+  @apply font-arial bg-[#15202b] antialiased scroll-smooth;
 }
 
 @layer components {
   .hoverAnimation {
-    @apply hover:bg-[#d9d9d9] hover:bg-opacity-10 rounded-full cursor-pointer px-2 py-2 transition duration-200 ease-out;
+    @apply hover:bg-[#fff] hover:bg-opacity-5 rounded-full cursor-pointer px-2 py-2 transition duration-200 ease-out;
   }
 
   .icon {

@@ -43,7 +43,7 @@ export default function Home({ trendingResults, followResults, providers }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="bg-black min-h-screen flex max-w-[1260px] mx-auto">
+      <main className="bg-[#15202b] min-h-screen flex max-w-[1260px] mx-auto">
         <Sidebar />
         <Feed />
         <Widgets
