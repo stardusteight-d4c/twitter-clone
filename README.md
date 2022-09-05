@@ -105,7 +105,7 @@ export default function Home({ trendingResults, followResults, providers }) {
 
 ### Deploying to production (NEXTAUTH_URL & JWT_SECRET) 
 
-When deploying your site set the NEXTAUTH_URL environment variable to the canonical URL of the website. Not providing any secret or JWT_SECRET will throw an error in production, generate your secret in *<i>generate-secret.vercel.app/32</i>.
+When deploying your site set the `NEXTAUTH_URL` environment variable to the canonical URL of the website. Not providing any secret or `JWT_SECRET` will throw an error in production, generate your secret in *<i>generate-secret.vercel.app/32</i>.
 
 *<i>next-auth.js.org/getting-started/example</i>
 
