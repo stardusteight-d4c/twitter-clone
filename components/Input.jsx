@@ -7,7 +7,7 @@ import {
   doc,
   serverTimestamp,
   updateDoc,
-} from '@firebase/firestore'
+} from 'firebase/firestore'
 import { getDownloadURL, ref, uploadString } from 'firebase/storage'
 import { useSession } from 'next-auth/react'
 
@@ -17,7 +17,6 @@ import {
   ChartBarIcon,
   EmojiHappyIcon,
   PhotographIcon,
-  UserCircleIcon,
   XIcon,
 } from '@heroicons/react/outline'
 
@@ -29,6 +28,12 @@ const Input = () => {
   const [showEmojis, setShowEmojis] = useState(false)
   const [loading, setLoading] = useState(false)
   const filePickerRef = useRef(null)
+
+  console.log('selectedFile ->', selectedFile)
+
+  console.log('filePickerRef ->', filePickerRef)
+
+  console.log('loading ->', loading)
 
   const sendPost = async () => {
     if (loading) return
@@ -45,19 +50,23 @@ const Input = () => {
 
     const imageRef = ref(storage, `posts/${docRef.id}/image`)
 
+    console.log('imageRef ->', imageRef)
+
     if (selectedFile) {
-      await uploadString(imageRef, selectedFile, 'data_url').then(async () => {
-        const downloadURL = await getDownloadURL(imageRef)
-        await updateDoc(doc(db, 'posts', docRef.id), {
-          image: downloadURL,
-        })
-      })
+      await uploadString(imageRef, selectedFile, 'data_url').then(
+        async (snapshot) => {
+          const donwloadURL = await getDownloadURL(imageRef)
+          await updateDoc(doc(db, 'posts', docRef.id), {
+            image: donwloadURL,
+          })
+        }
+      )
     }
 
-    setLoading(false)
     setInput('')
     setSelectedFile(null)
     setShowEmojis(false)
+    setLoading(false)
   }
 
   const addImageToPost = (e) => {
