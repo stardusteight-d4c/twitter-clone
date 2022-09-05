@@ -1,4 +1,4 @@
-# Twitter | Firebase, NextAuth.js & Handless UI
+# Twitter Clone | Firebase, NextAuth.js & Handless UI
 
 ![banner](banner.png)
 
