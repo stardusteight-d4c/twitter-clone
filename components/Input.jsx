@@ -29,12 +29,6 @@ const Input = () => {
   const [loading, setLoading] = useState(false)
   const filePickerRef = useRef(null)
 
-  console.log('selectedFile ->', selectedFile)
-
-  console.log('filePickerRef ->', filePickerRef)
-
-  console.log('loading ->', loading)
-
   const sendPost = async () => {
     if (loading) return
     setLoading(true)
@@ -49,8 +43,6 @@ const Input = () => {
     })
 
     const imageRef = ref(storage, `posts/${docRef.id}/image`)
-
-    console.log('imageRef ->', imageRef)
 
     if (selectedFile) {
       await uploadString(imageRef, selectedFile, 'data_url').then(
