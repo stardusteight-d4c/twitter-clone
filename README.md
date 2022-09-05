@@ -5,7 +5,7 @@
 > Twitter feed clone, where the user can authenticate and create a session through the Google provider implemented with NextAuth. Accessing the home feed, it is possible to send texts, emojis and image files through a post. The user will be able to view, like and comment on posts made by other users, in which the data is stored in Firebase through the Firestore Database and Storage services.
 
 :arrow_right: NextAuth.js | Authentication & Session <br />
-:arrow_right: Firebase - Backend as Service <br />
+:arrow_right: Firebase | Backend as Service <br />
 :arrow_right: Headless UI - Completely unstyled, fully accessible UI components, designed to integrate beautifully with Tailwind CSS. <br />
 <br />
 
@@ -108,4 +108,85 @@ export default function Home({ trendingResults, followResults, providers }) {
 When deploying your site set the `NEXTAUTH_URL` environment variable to the canonical URL of the website. Not providing any secret or `JWT_SECRET` will throw an error in production, generate your secret in *<i>generate-secret.vercel.app/32</i>.
 
 *<i>next-auth.js.org/getting-started/example</i>
+
+<br />
+
+## Firebase | Backend as Service 
+
+Build advanced apps. Activate your backend without managing servers. Easily scale to serve millions of users with Firebase databases, machine learning infrastructure, storage and hosting solutions.
+
+### Add Firebase to JavaScript Project - Create a Firebase project and register the app.
+
+Before adding Firebase to your JavaScript app, create a Firebase project and register your app in that project. When you register your app with Firebase, you will receive a Firebase configuration object that will be used to connect your app to your Firebase project resources.
+
+### Install the SDK and launch Firebase
+
+The configuration instructions are from version 9 of the Firebase SDK for JavaScript, which uses a JavaScript module format.
+
+```
+npm install firebase
+```
+
+### Launch Firebase in the app and create a Firebase app object:
+
+```js
+// firebase.js
+
+// Import the functions you need from the SDKs you need
+import { initializeApp, getApp, getApps } from 'firebase/app'
+import { getFirestore } from 'firebase/firestore'
+import { getStorage } from 'firebase/storage'
+
+const firebaseConfig = {
+  apiKey: 'AIzaSyBkjm4VKY4Fk90qxMdDf8Guz3P7rqwDH8k',
+  authDomain: 'twitter-clone-ed0c9.firebaseapp.com',
+  projectId: 'twitter-clone-ed0c9',
+  storageBucket: 'twitter-clone-ed0c9.appspot.com',
+  messagingSenderId: '539515234424',
+  appId: '1:539515234424:web:1c7974773216140c3ce58d',
+}
+
+// Initialize Firebase
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApp()
+const db = getFirestore()
+const storage = getStorage()
+
+export default app
+export { db, storage }
+```
+
+A `Firebase app` is a container-like object that stores common settings and shares authentication across Firebase services. After initializing a Firebase app object in code, you can add and start using Firebase services.
+
+### Access Firebase in the app
+
+Firebase services (such as Cloud Firestore, Authentication, Realtime Database, Remote Config, and more) are available for import in individual subpackages.
+
+You can `get realtime updates` with Cloud Firestore. It is possible to listen to a document with the `onSnapshot()` method. An initial call using the callback you provide creates a document snapshot immediately with the current contents of the single document. Then, each time the contents change, another call updates the document snapshot:
+
+```jsx
+// components/Feed.jsx 
+
+import { useEffect, useState } from 'react'
+import { onSnapshot, collection, query, orderBy } from '@firebase/firestore'
+import { db } from '../firebase'
+
+const Feed = () => {
+  const [posts, setPosts] = useState([])
+
+ useEffect(
+    () =>
+      onSnapshot(
+        query(collection(db, 'posts'), orderBy('timestamp', 'desc')),
+        (snapshot) => {
+          setPosts(snapshot.docs)
+        }
+      ),
+    []
+  )
+ 
+// ...
+```
+*<i>firebase.google.com/docs/web/setup?authuser=0&hl=en</i>
+
+
 
