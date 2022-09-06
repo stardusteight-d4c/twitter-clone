@@ -15,7 +15,7 @@ const Trending = ({ result }) => {
           Tendências com{' '}
           {result.tags.map((tag, index) => (
             <span key={index} className="tag">
-              {tag}
+              {tag}{' '}
             </span>
           ))}
         </p>

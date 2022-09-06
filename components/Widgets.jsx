@@ -44,10 +44,10 @@ const Widgets = ({ trendingResults, followResults }) => {
               className="rounded-full"
             />
             <div className="ml-4 leading-5 group">
-              <h4 className="font-bold group-hover:underline">
+              <h4 className="w-24 font-bold truncate group-hover:underline">
                 {result.username}
               </h4>
-              <h5 className="text-gray-500 text-[15px]">{result.tag}</h5>
+              <h5 className="text-gray-500 w-[90px] truncate text-[15px]">{result.tag}</h5>
             </div>
             <button className="ml-auto bg-white text-black rounded-full font-bold text-sm py-1.5 px-3.5">
               Follow

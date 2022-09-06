@@ -27,12 +27,14 @@ import Comment from '../components/Comment'
 import Widgets from '../components/Widgets'
 
 export const getServerSideProps = async (context) => {
-  const trendingResults = await fetch('https://jsonkeeper.com/b/D3NP').then(
-    (res) => res.json()
-  )
-  const followResults = await fetch(' https://jsonkeeper.com/b/5BJH').then(
-    (res) => res.json()
-  )
+  const trendingResults = await fetch(
+    `${process.env.BASE_URL}/api/trendingResults`
+  ).then((res) => res.json())
+
+  const followResults = await fetch(
+    `${process.env.BASE_URL}/api/followResults`
+  ).then((res) => res.json())
+  
   const providers = await getProviders()
   const session = await getSession(context)
 
