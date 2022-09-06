@@ -188,5 +188,132 @@ const Feed = () => {
 ```
 *<i>firebase.google.com/docs/web/setup?authuser=0&hl=en</i>
 
+<br />
 
+## HeadlessUI - Completely unstyled, fully accessible UI components, designed to integrate beautifully with Tailwind CSS. 
+
+The different components provided by HeadlessUI favor a dynamic, manageable and accessible interface in a matter of minutes.
+
+### Dialog (Modal)
+
+Modal is a window that opens over the page content without getting rid of it. To add the HeadlessUI modal, first install it via npm:
+
+```
+npm install @headlessui/react
+```
+
+### Showing and hiding your dialog
+
+Dialogs are basically built using the `Dialog` and `Dialog.Panel` components. When its `open` prop is `true` the dialog should be rendered, and when it is `false` the dialog is undone.
+
+The onClose callback fires when an open dialog is dismissed, which happens when the user clicks outside the your Dialog.Panel or presses the Escape key. You can use this callback to set open back to false and close your dialog.
+
+
+```jsx
+// ex: headlessui.com/react/dialog
+
+import { useState } from 'react'
+import { Dialog } from '@headlessui/react'
+
+function MyDialog() {
+  // The open/closed state lives outside of the Dialog and is managed by you
+  let [isOpen, setIsOpen] = useState(true)
+
+  function handleDeactivate() {
+    // ...
+  }
+
+  return (
+    /*
+      Pass `isOpen` to the `open` prop, and use `onClose` to set
+      the state back to `false` when the user clicks outside of
+      the dialog or presses the escape key.
+    */
+    <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
+      <Dialog.Panel>
+        <Dialog.Title>Deactivate account</Dialog.Title>
+        <Dialog.Description>
+          This will permanently deactivate your account
+        </Dialog.Description>
+
+        <p>
+          Are you sure you want to deactivate your account? All of your data
+          will be permanently removed. This action cannot be undone.
+        </p>
+
+        {/*
+          You can render additional buttons to dismiss your dialog by setting
+          `isOpen` to `false`.
+        */}
+        <button onClick={() => setIsOpen(false)}>Cancel</button>
+        <button onClick={handleDeactivate}>Deactivate</button>
+      </Dialog.Panel>
+    </Dialog>
+  )
+}
+
+```
+
+### Styling the dialog
+
+Style the `Dialog` and `Dialog.Panel` components using the className or style props like you would with any other element. `Dialog.Panel` determines the limit of your modal box, while `Dialog` determines the modal page. If you want to add an overlay layer, use the `Dialog.Overlay` component.
+
+### Transitions
+
+To animate the opening/closing of the dialog, use the `Transition component`. All you need to do is wrap the Dialog in a <Transition>, and dialog will transition automatically based on the state of the show prop on the <Transition>.
+
+When using <Transition> with your dialogs, you can remove the `open` prop, as the dialog will read the `show` state from the <Transition> automatically. To animate your backdrop and panel separately, wrap your Dialog in Transition and wrap your backdrop and panel each with their own `Transition.Child`:
+
+```jsx
+// components/Modal.jsx 
+
+import { modalState } from '../atoms/modalAtom'
+import { Dialog, Transition } from '@headlessui/react'
+import { Fragment, useEffect, useState } from 'react'
+// ... 
+
+function Modal() {
+  const [isOpen, setIsOpen] = useRecoilState(modalState)
+  
+  return (
+    <Transition.Root show={isOpen} as={Fragment}>
+      <Dialog as="div" className="fixed inset-0 z-50 pt-8" onClose={setIsOpen}>
+        <div className="flex items-start justify-center min-h-[800px] sm:min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <Dialog.Overlay className="fixed inset-0 bg-[#5b7083] bg-opacity-40 transition-opacity" />
+          </Transition.Child>
+
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            enterTo="opacity-100 translate-y-0 sm:scale-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+            leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+          >
+            <Dialog.Panel className="inline-block overflow-hidden text-left align-bottom transition-all transform bg-[#15202b] shadow-xl rounded-2xl sm:my-8 sm:align-middle sm:max-w-xl sm:w-full">
+            
+             {/* Modal Content */}
+             
+            </Dialog.Panel>
+          </Transition.Child>
+        </div>
+      </Dialog>
+    </Transition.Root>
+  )
+}
+
+export default Modal
+```
+
+*<i>headlessui.com/react/dialog</i>
 
