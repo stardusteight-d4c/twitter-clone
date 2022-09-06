@@ -34,7 +34,7 @@ export const getServerSideProps = async (context) => {
   const followResults = await fetch(
     `${process.env.BASE_URL}/api/followResults`
   ).then((res) => res.json())
-  
+
   const providers = await getProviders()
   const session = await getSession(context)
 
@@ -119,7 +119,7 @@ const PostPage = ({ trendingResults, followResults, providers }) => {
           followResults={followResults}
         />
 
-        {isOpen && <Modal />}
+        <Modal />
       </main>
     </>
   )

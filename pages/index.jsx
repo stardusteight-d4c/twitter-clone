@@ -53,7 +53,7 @@ export default function Home({ trendingResults, followResults, providers }) {
           followResults={followResults}
         />
 
-        {isOpen && <Modal />}
+        <Modal />
       </main>
     </>
   )

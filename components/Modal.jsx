@@ -33,13 +33,17 @@ function Modal() {
   const [comment, setComment] = useState('')
   const router = useRouter()
 
-  useEffect(
-    () =>
-      onSnapshot(doc(db, 'posts', postId), (snapshot) => {
-        setPost(snapshot.data())
-      }),
-    [postId]
-  )
+  // useEffect cannot be called without Modal selected, because need specific post data
+  useEffect(() => {
+    if (!isOpen) return
+    const unsubscribe = onSnapshot(doc(db, 'posts', postId), (snapshot) => {
+      setPost(snapshot.data())
+    })
+
+    return () => {
+      unsubscribe()
+    }
+  }, [isOpen, postId])
 
   const sendComment = async (e) => {
     e.preventDefault()

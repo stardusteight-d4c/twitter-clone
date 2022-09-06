@@ -11,7 +11,6 @@ const Feed = () => {
   const { data: session } = useSession()
   const [posts, setPosts] = useState([])
 
-  // MESSY
   // useEffect(() => {
   //   const unsubscribe = onSnapshot(
   //     query(collection(db, "posts"), orderBy("timestamp", "desc")),
@@ -25,7 +24,6 @@ const Feed = () => {
   //   };
   // }, [db]);
 
-  // CLEAN
   useEffect(
     () =>
       onSnapshot(
